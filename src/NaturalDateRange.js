@@ -49,19 +49,43 @@ last 3 months
 //define all the rules
 var LanguageRules = [
     new MatchFragment("today", function(){
-        return[moment().startOf('day').toDate(),new Date()]
+        return[moment().startOf('day').toDate(),new Date()];
     }),
     
     new MatchFragment("yesterday", function(){
         var y = moment().subtract(1,'days');
-        return[moment(y).startOf('day').toDate(),moment(y).endOf('day').toDate()]
+        return[moment(y).startOf('day').toDate(),moment(y).endOf('day').toDate()];
     }),
 
     new MatchFragment("last (week|month|year)", function(capture){
         var period = capture[1];
         var y = moment().subtract(1,period);
-        return[moment(y).startOf(period).toDate(),moment(y).endOf(period).toDate()]
+        return[moment(y).startOf(period).toDate(),moment(y).endOf(period).toDate()];
     }),
+
+    new MatchFragment("last ([0-9]) (days|weeks|months|years)", function(capture){
+        var value = capture[1];
+        var period = capture[2];
+        var d = moment().subtract(value,period);
+        return[d.toDate(),new Date()];
+    }),
+
+    new MatchFragment("this (week|month|year)", function(capture){
+        var period = capture[1];
+        var d = moment().subtract(1,period);
+        return[moment(d).startOf(period).toDate(),new Date()];
+    }),
+
+    //
+    // find 'some date to some date' - will try and use moment to decode the individual strings
+    new MatchFragment("(.*).+?(?=to)to (.*)", function(capture){
+        return[moment(capture[1]).startOf('day').toDate(),moment(capture[2]).endOf('day').toDate()];
+    }),
+
+    // find 'between some date and some date' - will try and use moment to decode the individual strings
+    new MatchFragment("between (.*).+?(?=and)and (.*)", function(capture){
+        return[moment(capture[1]).startOf('day').toDate(),moment(capture[2]).endOf('day').toDate()];
+    })
 ]
 /*
 
