@@ -1,7 +1,7 @@
 var moment = require('moment');
 
 var NaturalDateRange = function (languageString){
-
+    //console.log("proessing",languageString);
     //from to
     //languageString.match(regex)
     var self = this;
@@ -16,6 +16,9 @@ var NaturalDateRange = function (languageString){
             return self;
         }
     });
+    if(self._start === undefined || self._end === undefined){
+        throw new Error("Invalid Date Range String");
+    }
 };
 
 NaturalDateRange.prototype.getStart = function(){ 
