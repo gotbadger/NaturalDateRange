@@ -1,6 +1,6 @@
 {
   "name": "NaturalDateRange",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "given a text string try and calculate a date range",
   "main": "src/NaturalDateRange.js",
   "directories": {
