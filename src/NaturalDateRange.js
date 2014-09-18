@@ -66,7 +66,7 @@ var LanguageRules = [
         return[moment(y).startOf(period).toDate(),moment(y).endOf(period).toDate()];
     }),
 
-    new MatchFragment("last ([0-9]) (days|weeks|months|years)", function(capture){
+    new MatchFragment("last ([0-9]+?) (days|weeks|months|years)", function(capture){
         var value = capture[1];
         var period = capture[2];
         var d = moment().subtract(value,period);
@@ -75,7 +75,7 @@ var LanguageRules = [
 
     new MatchFragment("this (week|month|year)", function(capture){
         var period = capture[1];
-        var d = moment().subtract(1,period);
+        var d = moment();
         return[moment(d).startOf(period).toDate(),new Date()];
     }),
 
